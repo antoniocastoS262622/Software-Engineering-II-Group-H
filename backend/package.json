@@ -9,7 +9,6 @@
   "author": "Group H",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "18.4.x",
     "async-redis": "1.1.x",
     "redis": "2.8.x",
     "socket.io": "2.3.x"
