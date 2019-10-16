@@ -1,4 +1,4 @@
-function test(info, sid, db, sockets) {
+function test(info, client, db, all) {
     console.log('test run!');
 }
 

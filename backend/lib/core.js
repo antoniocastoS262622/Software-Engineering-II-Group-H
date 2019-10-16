@@ -23,9 +23,11 @@ async function handle(sockets) {
         client.on('message', function(stringData) {
             const data = JSON.parse(stringData);
             const command = data.command;
-            const handler = plugins.filter(plugin => plugin[command] !== null && typeof(plugin[command]) === 'function').map(plugin => plugin[command]).pop();
+            const handler = plugins.filter(plugin => plugin[command] !== null && typeof(plugin[command]) === 'function')
+                                   .map(plugin => plugin[command])
+                                   .pop();
             if(handler)
-                handler(data.info, client.id, redisClient, sockets);
+                handler(data.info, client, redisClient, sockets);
         });
     });
 }
