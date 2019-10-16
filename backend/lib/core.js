@@ -9,8 +9,7 @@ let redisClient;
 
 async function connect() {
     const client = await Redis.createClient({
-        host: 'localhost',
-        port: 6379
+        url: 'redis://h:p8d8bfb0cbfb60cc409dc7309e74de8ff1f22c97e7347d8eb9aee6ec65a69f0d0@ec2-52-209-91-196.eu-west-1.compute.amazonaws.com:26679'
     });
     redisClient = AsyncRedis.decorate(client);
 }
