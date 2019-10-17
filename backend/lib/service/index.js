@@ -1,7 +1,5 @@
-function test(info, client, db, all) {
-    console.log('test run!');
-}
+const counter = require('./counter');
 
 module.exports = {
-    test
+    getCounterInfo: counter.getCounterInfo
 };

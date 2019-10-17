@@ -1,6 +1,7 @@
 const Redis = require('redis');
 const AsyncRedis = require('async-redis');
 
+const auth = require('./auth');
 const plugins = [
     require('./service')
 ];
@@ -16,10 +17,19 @@ async function connect() {
 async function handle(sockets) {
     await connect();
     sockets.on('connection', function(client) {
-        client.on('join', function(credentials) {
-            
+        client.on('join', function(stringData) {
+            const data = JSON.parse(stringData);
+            const loginResult = auth.login(data);
+            if(loginResult)
+                client.auth = loginResult;
+            else
+                client.disconnect();
         });
         client.on('message', function(stringData) {
+            if(!client.auth) {
+                client.disconnect();
+                return;
+            }
             const data = JSON.parse(stringData);
             const command = data.command;
             const handler = plugins.filter(plugin => plugin[command] !== null && typeof(plugin[command]) === 'function')
