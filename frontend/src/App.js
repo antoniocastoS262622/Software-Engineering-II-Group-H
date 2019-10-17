@@ -6,6 +6,8 @@ import {
   Link
 } from "react-router-dom";
 
+import Ticket from './routes/ticket'
+
 function App() {
   return (
     <Router>
@@ -22,6 +24,9 @@ function App() {
             <li>
               <Link to="/users">Users</Link>
             </li>
+            <li>
+              <Link to="./ticket">Ticket</Link>
+            </li>
           </ul>
         </nav>
 
@@ -33,6 +38,9 @@ function App() {
           </Route>
           <Route path="/users">
             <Users />
+          </Route>
+          <Route path="/ticket">
+            <Ticket />
           </Route>
           <Route path="/">
             <Home />
