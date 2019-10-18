@@ -1,67 +1,35 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import socketIOClient from 'socket.io-client';
 
-import Ticket from './routes/ticket'
+import Counter from './components/counter';
+import Ticket from './components/ticket';
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <h1>This nav menu below is just for development purpose.</h1>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-            <li>
-              <Link to="./ticket">Ticket</Link>
-            </li>
-          </ul>
-        </nav>
+const url = 'ws://localhost:8080';
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/ticket">
-            <Ticket />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+class App extends Component {
+    state = {
+        socket: null
+    };
+    
+    componentDidMount() {
+        const socket = socketIOClient(url);
+        this.setState({ socket });
+    }
 
-//These lines below are written just for example
-function Home() {
-  return <h2>Home</h2>;
-}
+    render() {
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/ticket">
+                        <Ticket />
+                    </Route>
+                    <Route path="/counter/:id" component={Counter} />
+                </Switch>
+            </Router>
+        );
+    }
 
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }
 
 export default App;

@@ -17,6 +17,7 @@ async function connect() {
 async function handle(sockets) {
     await connect();
     sockets.on('connection', function(client) {
+        console.log('newConnection');
         client.on('join', function(stringData) {
             const data = JSON.parse(stringData);
             const loginResult = auth.login(data);
