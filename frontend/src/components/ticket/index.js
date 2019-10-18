@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
-import styles from './styles.css';
-import { throws } from 'assert';
+import styles from './styles.module.css';
 
 class Ticket extends Component {
     state = {
