@@ -1,8 +1,25 @@
-import React from 'react';
+import React, {Component} from 'react';
+
 import styles from './styles.css';
 
-class Ticket extends React.Component {
-    render(){
+class Ticket extends Component {
+    state = {
+
+    };
+
+    ticketGenerated() {
+        //
+    }
+    serving() {
+        
+    }
+    login() {
+        //
+    }
+    setup() {
+        //
+    }
+    render() {
         return(
             <div>
                 <h1>Your ticket</h1>

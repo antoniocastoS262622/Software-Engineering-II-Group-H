@@ -1,10 +1,29 @@
 import React, {Component} from 'react';
 
-import styles from './styles';
+import styles from './styles.css';
 
 class Counter extends Component {
+    state = {
+        id: null,
+        services: null
+    };
+
+    counterInfo(data) {
+        //
+    }
+    nextClient(data) {
+        //
+    }
+    login(password) {
+        //
+    }
+    setup(id) {
+        this.setState({ id });
+        this.props.socket.on('counterInfo', this.counterInfo);
+        this.props.socket.on('nextClient', this.nextClient);
+    }
     render() {
-        const { id } = this.props.match.params
+        this.setup(this.props.match.params.id);
 
         return(
             <div>
