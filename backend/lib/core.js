@@ -17,21 +17,18 @@ async function connect() {
 async function handle(sockets) {
     await connect();
     sockets.on('connection', function(client) {
-        console.log('newConnection');
-        client.on('join', function(stringData) {
-            const data = JSON.parse(stringData);
+        client.on('join', function(data) {
             const loginResult = auth.login(data);
             if(loginResult)
                 client.auth = loginResult;
             else
                 client.disconnect();
         });
-        client.on('message', function(stringData) {
+        client.on('message', function(data) {
             if(!client.auth) {
                 client.disconnect();
                 return;
             }
-            const data = JSON.parse(stringData);
             const command = data.command;
             const handler = plugins.filter(plugin => plugin[command] !== null && typeof(plugin[command]) === 'function')
                                    .map(plugin => plugin[command])
