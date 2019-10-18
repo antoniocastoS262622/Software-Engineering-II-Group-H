@@ -12,9 +12,11 @@ class App extends Component {
         socket: null
     };
     
-    componentDidMount() {
+    constructor(props) {
+        super(props);
+
         const socket = socketIOClient(url);
-        this.setState({ socket });
+        this.state = { socket };
     }
 
     render() {
