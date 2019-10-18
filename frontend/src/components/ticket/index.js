@@ -50,7 +50,7 @@ class Ticket extends Component {
                         <div className={styles.ticketWrapper}>
                             <div className={styles.ticketHeader}>
                                 <p id={styles.ticketService}>Service choosen:<br></br>
-                                    {this.state.requestedTicket}</p>
+                                    {this.state.requestedTicket.toUpperCase()}</p>
                             </div>
                             <div className={styles.ticketNumberWrapper}>
                                 <p id={styles.ticketNumber}>{this.state.ticket.code}</p>
@@ -64,9 +64,11 @@ class Ticket extends Component {
                     </div>
                 )}
                 {this.state.requestedTicket === null && (
-                    <div>
-                        <button onClick={() => this.requestTicket('packages')}>Packaging</button>
-                        <button onClick={() => this.requestTicket('accounts')}>Accounting</button>
+                    <div className={styles.ticketWrapper}>
+                        <p id={styles.serviceName}>Select your service</p>
+                        <button id={styles.packagingButton} onClick={() => this.requestTicket('packages')}>Packaging</button>
+                        <br></br>
+                        <button id={styles.accountingButton} onClick={() => this.requestTicket('accounts')}>Accounting</button>
                     </div>
                 )}
             </div>
