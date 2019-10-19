@@ -3,9 +3,6 @@ html, body {
     padding: 0;
     font-family: 'Segoe UI';
 }
-p {
-    text-transform: uppercase;
-}
 .container, .boardContainer, .headerContainer {
     display: flex;
     flex: 1;

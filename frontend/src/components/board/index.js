@@ -37,6 +37,7 @@ class Board extends Component {
     setup() {
         this.login();
 
+        this.props.socket.on('currentSituation', this.updateCurrentSituation.bind(this));
         this.props.socket.on('serving', this.serving.bind(this));
     }
 
@@ -53,8 +54,8 @@ class Board extends Component {
             <div className={styles.container}>
                 <div className={styles.boardContainer}>
                     <div className={styles.headerContainer}>
-                        <p>ticket</p>
-                        <p>sportello</p>
+                        <p>TICKET</p>
+                        <p>COUNTER</p>
                     </div>
                     {Object.keys(this.state.current).map(key => (
                         <div className={styles.lineContainer}>
