@@ -25,13 +25,13 @@ async function serveNext(info, client, db, all) {
         return;
         
     const queuesGetter = counters_request_types[client.auth.id].map(async type => {
-        const length = await db.llen(type.name);
+        const length = await db.llen('queues:' + type.name);
         return Object.assign(type, { length });
     });
     const queues = await Promise.all(queuesGetter);
     const bestQueue = queues.filter(queue => queue.length > 0).reduce((best, current) => {
-        return (best != null && (best.length < current.length) ||
-            (best.length === current.length && best.serviceTime < current.serviceTime)) ?
+        return (best !== null && ((best.length < current.length) ||
+            (best.length === current.length && best.serviceTime < current.serviceTime))) ?
             best : current;
     }, null);
 
@@ -44,7 +44,7 @@ async function serveNext(info, client, db, all) {
 
     const serving = {
         counter: client.auth.id,
-        code: queue.letter + ticket.num,
+        code: bestQueue.letter + ticket.num,
         datetime: ticket.datetime
     };
     client.emit('nextClient', serving);
