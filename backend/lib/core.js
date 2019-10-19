@@ -13,15 +13,17 @@ async function connect() {
         url: 'redis://h:p8d8bfb0cbfb60cc409dc7309e74de8ff1f22c97e7347d8eb9aee6ec65a69f0d0@ec2-52-209-91-196.eu-west-1.compute.amazonaws.com:26679'
     });
     redisClient = AsyncRedis.decorate(client);
+    await redisClient.flushdb();
 }
 async function handle(sockets) {
     await connect();
     sockets.on('connection', function(client) {
         client.on('join', function(data) {
             const loginResult = auth.login(data);
-            if(loginResult)
+            if(loginResult) {
                 client.auth = loginResult;
-            else
+                client.emit('loginSuccessful');
+            } else
                 client.disconnect();
         });
         client.on('message', function(data) {
