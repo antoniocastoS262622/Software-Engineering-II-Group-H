@@ -16,7 +16,7 @@ async function getTicket(info, client, db, all) {
     
     const ticket = {
         type: info.requestType,
-        num: num % 1000,
+        num: ('00' + (num % 1000)).slice(-3),
         datetime: now.toISOString()
     };
 

@@ -49,6 +49,8 @@ async function serveNext(info, client, db, all) {
     };
     client.emit('nextClient', serving);
     all.emit('serving', serving);
+
+    await db.hset('serving', client.auth.id, serving.code);
 }
 
 module.exports = {
