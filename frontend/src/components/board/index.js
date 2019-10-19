@@ -14,16 +14,28 @@ class Board extends Component {
         });
     }
 
+    loginSuccessful() {
+        this.getCurrentSituation();
+    }
+
     updateCurrentSituation(data) {
-        this.setState({
-            current: data
-        });
+        let current = {};
+        Object.keys(data).forEach(key => {
+            current[key] = {
+                code: data[key],
+                datetime: new Date()
+            };
+        })
+        this.setState({ current });
     }
 
     serving(data) {
         this.setState({
             current: Object.assign(this.state.current, {
-                [data.counter]: data.code
+                [data.counter]: {
+                    code: data.code,
+                    datetime: new Date()
+                }
             })
         });
     }
@@ -37,6 +49,7 @@ class Board extends Component {
     setup() {
         this.login();
 
+        this.props.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
         this.props.socket.on('currentSituation', this.updateCurrentSituation.bind(this));
         this.props.socket.on('serving', this.serving.bind(this));
     }
@@ -57,9 +70,9 @@ class Board extends Component {
                         <p>TICKET</p>
                         <p>COUNTER</p>
                     </div>
-                    {Object.keys(this.state.current).map(key => (
+                    {Object.keys(this.state.current).sort((a, b) => this.state.current[b].datetime - this.state.current[a].datetime).map(key => (
                         <div className={styles.lineContainer}>
-                            {text(this.state.current[key], 7, '#b73131')}
+                            {text(this.state.current[key].code, 7, '#b73131')}
                             {text(('0' + key).slice(-2), 5, '#2f962d')}
                         </div>
                     ))}

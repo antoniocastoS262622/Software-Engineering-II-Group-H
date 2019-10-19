@@ -3,7 +3,8 @@ const AsyncRedis = require('async-redis');
 
 const auth = require('./auth');
 const plugins = [
-    require('./service')
+    require('./service'),
+    require('./board')
 ];
 
 let redisClient;
