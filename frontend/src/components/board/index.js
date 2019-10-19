@@ -5,10 +5,31 @@ import styles from './styles.module.css';
 
 class Board extends Component {
     state = {
+        current: {
+            1: 'A005',
+            2: 'P003',
+            3: 'A003'
+        }
     };
 
-    serving() {
-        
+    getCurrentSituation() {
+        this.props.socket.send({
+            command: 'getCurrentSituation'
+        });
+    }
+
+    updateCurrentSituation(data) {
+        this.setState({
+            current: data
+        });
+    }
+
+    serving(data) {
+        this.setState({
+            current: Object.assign(this.state.current, {
+                [data.counter]: data.code
+            })
+        });
     }
 
     login() {
@@ -39,18 +60,12 @@ class Board extends Component {
                         <p>ticket</p>
                         <p>sportello</p>
                     </div>
-                    <div className={styles.lineContainer}>
-                        {text('A001', 7, '#b73131')}
-                        {text('04', 5, '#2f962d')}
-                    </div>
-                    <div className={styles.lineContainer}>
-                        {text('A001', 7, '#b73131')}
-                        {text('04', 5, '#2f962d')}
-                    </div>
-                    <div className={styles.lineContainer}>
-                        {text('A001', 7, '#b73131')}
-                        {text('04', 5, '#2f962d')}
-                    </div>
+                    {Object.keys(this.state.current).map(key => (
+                        <div className={styles.lineContainer}>
+                            {text(this.state.current[key], 7, '#b73131')}
+                            {text(('0' + key).slice(-2), 5, '#2f962d')}
+                        </div>
+                    ))}
                 </div>
             </div>
         );
