@@ -4,6 +4,7 @@ import socketIOClient from 'socket.io-client';
 
 import Counter from './components/counter/';
 import Ticket from './components/ticket/';
+import Board from './components/board/';
 
 const url = 'ws://localhost:8080';
 
@@ -25,6 +26,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/ticket" render={(props) => <Ticket {...props} socket={this.state.socket} />} />
                     <Route path="/counter/:id" render={(props) => <Counter {...props} socket={this.state.socket} />} />
+                    <Route path="/board" render={(props) => <Board {...props} socket={this.state.socket} />} />
                 </Switch>
             </Router>
         );
