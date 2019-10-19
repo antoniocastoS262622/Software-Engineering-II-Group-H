@@ -81,8 +81,8 @@ class Counter extends Component {
                     <div className={styles.counterContainer}>
                         <h1>Counter {this.state.id}</h1>
                         <p>Handled request types: &emsp;
-                            {this.state.services.map(service => (
-                                <span className={styles.tag}>{service}</span>
+                            {this.state.services.map((service, index) => (
+                                <span className={styles.tag} key={index}>{service}</span>
                             ))}
                         </p>
                         <h1 className={styles.servedTicket}>{this.state.ticket || '\u00B7\u00B7\u00B7'}</h1>
