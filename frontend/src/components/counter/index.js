@@ -8,26 +8,52 @@ class Counter extends Component {
         services: null
     };
 
-    counterInfo(data) {
-        //
+    getCounterInfo() {
+        this.props.socket.send({
+            command: 'getCounterInfo'
+        });
     }
+
+    serveNext() {
+        this.props.socket.send({
+            command: 'serveNext'
+        });
+    }
+
+    counterInfo(data) {
+        this.setState({
+            id: data.id,
+            services: data.requestTypes
+        });
+    }
+
     nextClient(data) {
         //
     }
-    login(password) {
-        //
+
+    login(id, password) {
+        this.props.socket.emit('join', {
+            role: 'counter',
+            id,
+            password
+        });
     }
+
     setup(id) {
-        this.setState({ id });
-        this.props.socket.on('counterInfo', this.counterInfo);
-        this.props.socket.on('nextClient', this.nextClient);
+        this.login(id, 'counter' + id);
+
+        this.props.socket.on('counterInfo', this.counterInfo.bind(this));
+        this.props.socket.on('nextClient', this.nextClient.bind(this));
+
+        this.getCounterInfo();
     }
+
     render() {
-        this.setup(this.props.match.params.id);
+        this.setup(parseInt(this.props.match.params.id));
 
         return(
             <div>
-                <h1>Counter {id}</h1>
+                <h1>Counter</h1>
             </div>
         );
     }
