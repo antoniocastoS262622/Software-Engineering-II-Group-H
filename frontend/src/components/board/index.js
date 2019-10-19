@@ -5,11 +5,7 @@ import styles from './styles.module.css';
 
 class Board extends Component {
     state = {
-        current: {
-            1: 'A005',
-            2: 'P003',
-            3: 'A003'
-        }
+        current: {}
     };
 
     getCurrentSituation() {
