@@ -12,11 +12,12 @@ async function getTicket(info, client, db, all) {
         
     const id = await db.incr('tickets:id');
     const num = await db.incr('queues:' + info.requestType + ':next');
+    const numString = ('00' + (num % 1000)).slice(-3);
     const now = new Date();
     
     const ticket = {
         type: info.requestType,
-        num: ('00' + (num % 1000)).slice(-3),
+        num: numString,
         datetime: now.toISOString()
     };
 
@@ -24,7 +25,7 @@ async function getTicket(info, client, db, all) {
     await db.rpush('queues:' + info.requestType, id);
 
     client.emit('ticketGenerated', {
-        code: types.find(type => type.name === info.requestType).letter + num,
+        code: types.find(type => type.name === info.requestType).letter + numString,
         datetime: now
     });
 }
