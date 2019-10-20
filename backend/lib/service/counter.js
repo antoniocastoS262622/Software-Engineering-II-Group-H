@@ -30,7 +30,7 @@ async function serveNext(info, client, db, all) {
     });
     const queues = await Promise.all(queuesGetter);
     const bestQueue = queues.filter(queue => queue.length > 0).reduce((best, current) => {
-        return (best !== null && ((best.length < current.length) ||
+        return (best !== null && ((best.length > current.length) ||
             (best.length === current.length && best.serviceTime < current.serviceTime))) ?
             best : current;
     }, null);
