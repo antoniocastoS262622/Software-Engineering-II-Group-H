@@ -9,7 +9,10 @@ class Admin extends React.Component {
         this.state = {
             socket: null,
             password: '',
-            loggingIn: false
+            loggingIn: false,
+            loggedIn: false,
+            requestTypes: null,
+            counters: null
         };
     }
 
@@ -23,25 +26,62 @@ class Admin extends React.Component {
     }
 
     setup() {
+        this.state.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
+        this.state.socket.on('adminInfos', this.receiveAdminInfos.bind(this));
+    }
 
+    login(password) {
+        this.setState({
+            loggingIn: true,
+        });
+        this.state.socket.emit('join', {
+            role: 'admin',
+            password
+        })
+    }
+
+    loginSuccessful() {
+        this.setState({
+           loggedIn: true
+        });
+        this.getAdminInfos();
+    }
+
+    getAdminInfos() {
+        this.state.socket.send({
+            command: 'getAdminInfos'
+        });
+    }
+
+    receiveAdminInfos(data) {
+        this.setState({
+            requestTypes: data.requestTypes,
+            counters: data.counters
+        });
     }
 
     render() {
-        return(
+        return (
             <div className={styles.container}>
                 {!this.state.loggingIn && (
                     <div className={styles.loginContainer}>
                         <h1>Authorization required</h1>
                         <p>Access to the admin dashboard is protected by password. Please authenticate.</p>
-                        <input className={styles.passwordInput} type="password" onChange={(e) => this.setState({ password: e.target.value })} />
-                        <button onClick={() => this.login}>login</button>
+                        <input className={styles.passwordInput} type="password"
+                               onChange={(e) => this.setState({password: e.target.value})}/>
+                        <button onClick={() => this.login(this.state.password)}>login</button>
                     </div>
                 )}
-                {this.state.loggingIn === true && (
+                {this.state.loggingIn === true && this.state.loggedIn === false &&(
                     <div className={styles.loadingContainer}>
                         <div className={styles.spinner}>
-                            <Loader type="TailSpin" color="#444" height={50} width={50} />
+                            <Loader type="TailSpin" color="#444" height={50} width={50}/>
                         </div>
+                    </div>
+                )}
+                {this.state.loggedIn === true && (
+                    <div className={styles.container}>
+                        <p>Placeholder for admin panel</p>
                     </div>
                 )}
             </div>
