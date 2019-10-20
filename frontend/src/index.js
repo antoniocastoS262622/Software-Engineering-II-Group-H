@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Ticket from "./components/ticket";
-import Counter from "./components/counter";
-import Board from "./components/board";
+import Ticket from "./components/ticket/ticket";
+import Counter from "./components/counter/counter";
+import Board from "./components/board/board";
 
 const routing = (
     <Router>

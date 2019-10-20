@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Loader from 'react-loader-spinner';
 
-import styles from './styles.module.css';
+import styles from './counter.module.css';
 import socketIOClient from "socket.io-client";
 
 class Counter extends Component {

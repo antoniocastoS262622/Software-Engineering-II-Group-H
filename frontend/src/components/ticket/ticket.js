@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Loader from 'react-loader-spinner';
 
-import styles from './styles.module.css';
+import styles from './ticket.module.css';
 import socketIOClient from "socket.io-client";
 
 class Ticket extends Component {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Textfit } from 'react-textfit';
 
-import styles from './styles.module.css';
+import styles from './board.module.css';
 import socketIOClient from "socket.io-client";
 
 class Board extends Component {
