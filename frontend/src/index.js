@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Ticket from "./components/ticket/ticket";
 import Counter from "./components/counter/counter";
 import Board from "./components/board/board";
+import Admin from './components/admin/admin'
 
 const routing = (
     <Router>
@@ -14,6 +15,7 @@ const routing = (
             <Route path="/ticket" render={(props) => <Ticket {...props} />} />
             <Route path="/counter/:id" render={(props) => <Counter {...props} />} />
             <Route path="/board" render={(props) => <Board {...props} />} />
+            <Route path='/admin' render={(props) => <Admin {...props} />} />
         </Switch>
     </Router>
 );
