@@ -1,4 +1,5 @@
 const types = require('./types');
+const counter = require('./counter');
 
 function authorize(client) {
     return client.auth.role === 'customer';
@@ -24,8 +25,15 @@ async function getTicket(info, client, db, all) {
     await db.set('tickets:' + id, JSON.stringify(ticket));
     await db.rpush('queues:' + info.requestType, id);
 
+    client.ticket = {
+        id,
+        requestType: info.requestType
+    };
+
+    const estimatedTime = await counter.getEstimatedTime(info.requestType, id, db);
     client.emit('ticketGenerated', {
         code: types.find(type => type.name === info.requestType).letter + numString,
+        estimatedTime,
         datetime: now
     });
 }
