@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
+import Loader from 'react-loader-spinner';
 
 import styles from './styles.module.css';
 
 class Ticket extends Component {
     state = {
-        requestedTicket: null
+        ticket: null,
+        service: null,
+        requesting: false,
+        
+        myTurnAtCounter: null
     };
 
-    requestTicket(type){
+    requestTicket(type) {
         this.props.socket.send({
             command: 'getTicket',
             info: {
@@ -15,60 +20,75 @@ class Ticket extends Component {
             }
         });
         this.setState({
-            requestedTicket: type
+            service: type,
+            requesting: true
         });
     }
+
     ticketGenerated(ticket) {
+        this.setState({ ticket });
+    }
+
+    serving(data) {
+        if(data.code === this.state.ticket.code)
+            this.setState({ myTurnAtCounter: data.counter });
+    }
+
+    estimatedTimeChanged(data) {
         this.setState({
-            ticket
-        });
+            ticket: Object.assign(this.state.ticket, { estimatedTime: data.estimatedTime })
+        })
     }
-    serving() {
-        
-    }
+
     login() {
         this.props.socket.emit('join', {
             role: 'customer'
         });
     }
+
     setup() {
         this.login();
+
         this.props.socket.on('ticketGenerated', this.ticketGenerated.bind(this));
         this.props.socket.on('serving', this.serving.bind(this));
+        this.props.socket.on('estimatedTimeChanged', this.estimatedTimeChanged.bind(this));
     }
 
     componentDidMount() {
         this.setup();
     }
+
     render() {
         return(
-            <div>
-                {this.state.ticket && (
-                    <div>
-                        <h1>Your ticket</h1>
-                        <br/>
-                        <div className={styles.ticketWrapper}>
-                            <div className={styles.ticketHeader}>
-                                <p id={styles.ticketService}>Service choosen:<br></br>
-                                    {this.state.requestedTicket.toUpperCase()}</p>
-                            </div>
-                            <div className={styles.ticketNumberWrapper}>
-                                <p id={styles.ticketNumber}>{this.state.ticket.code}</p>
-                            </div>
-                            <div className={styles.ticketStatistics}>
-                                <p id={styles.ticketService}>Estimated time: <br></br>20 min.<br></br>
-                                Timestamp:<br></br>
-                                {this.state.ticket.datetime}</p>
-                            </div>
+            <div className={styles.container}>
+                {this.state.ticket === null && this.state.requesting === false && (
+                    <div className={styles.requestContainer}>
+                        <h1>Select a service</h1>
+                        <button onClick={() => this.requestTicket('accounts')}>accounts</button>
+                        <button onClick={() => this.requestTicket('packages')}>packages</button>
+                    </div>
+                )}
+                {this.state.ticket === null && this.state.requesting === true && (
+                    <div className={styles.loadingContainer}>
+                        <div className={styles.spinner}>
+                            <Loader type="TailSpin" color="#444" height={50} width={50} />
                         </div>
                     </div>
                 )}
-                {this.state.requestedTicket === null && (
-                    <div className={styles.ticketWrapper}>
-                        <p id={styles.serviceName}>Select your service</p>
-                        <button id={styles.packagingButton} onClick={() => this.requestTicket('packages')}>Packaging</button>
-                        <br></br>
-                        <button id={styles.accountingButton} onClick={() => this.requestTicket('accounts')}>Accounting</button>
+                {this.state.ticket !== null && (
+                    <div className={styles.ticketContainer}>
+                        <h1>Your ticket</h1>
+                        <p>Selected service: <span className={styles.tag}>{this.state.service}</span></p>
+                        <h1 className={styles.servedTicket}>{this.state.ticket.code}</h1>
+                        <p className={styles.datetime}>{new Date(this.state.ticket.datetime).toLocaleString()}</p>
+                        {this.state.myTurnAtCounter === null ? (
+                            <p className={styles.estimatedTime}>estimated waiting time: <b>{this.state.ticket.estimatedTime} minutes</b></p>
+                        ) : (
+                            <div className={styles.info}>
+                                <p className={styles.estimatedTime}><b>YOUR TURN</b></p>
+                                <p><b>counter {this.state.myTurnAtCounter}</b></p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

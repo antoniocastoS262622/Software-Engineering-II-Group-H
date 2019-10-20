@@ -1,66 +1,54 @@
-.ticketWrapper {
-    align-content: center;
-    border-style: solid;
-    border-color: black;
-    border-radius: 25.0px;
-    background-color: yellow;
-    position:fixed;
-    top: 50%;
-    left: 50%;
-    width:15em;
-    height:18em;
-    margin-top: -9em; /*set to a negative number 1/2 of your height*/
-    margin-left: -15em; /*set to a negative number 1/2 of your width*/
-  }
-
-  .ticketHeader {
-    size: auto;
-
-  }
-
-  .ticketNumberWrapper {
-    background-color: white;
-    border-style: solid;
-    border-color: black;
-    border-radius: 25.0px;
-    margin-left: 25%;
-    margin-right: 25%;
-  }
-
-  #ticketNumber{
-    padding: -10%;
+.container, .requestContainer, .loadingContainer, .ticketContainer {
+    display: flex;
+    flex: 1;
+}
+.container {
+    height: 100vh;
+}
+.requestContainer {
+    flex-direction: column;
+    margin: 15rem;
+    align-items: center;
+}
+.requestContainer h1 {
+    margin-bottom: 3rem;
+}
+.requestContainer button {
+    margin: 1rem;
+}
+.loadingContainer {
+    justify-content: center;
+    align-items: center;
+}
+.spinner {
+    height: 50px;
+}
+.ticketContainer {
+    flex-direction: column;
+    margin: 10rem;
+    align-items: center;
+}
+.tag {
+    margin: 0 0.5rem;
+    padding: 0.6rem;
+    color: #fff;
+    background-color: #444;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 0.5em;
+}
+.servedTicket {
+    margin-bottom: 0.1em;
+    font-size: 8em;
+    font-weight: normal;
+    font-family: monospace;
+}
+.info {
     text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    color: red;
-  }
-
-  #ticketService{
-    text-align: center;
-    font-weight: bold;
-  }
-
-  #packagingButton{
-    height: 30px;
-    width: 150px;
-    margin-top: 20%;
-    margin-left: 19%;
-    border-radius: 25.0px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  #accountingButton{
-    height: 30px;
-    width: 150px;
-    margin-left: 19%;
-    margin-top: 10px;
-    border-radius: 25.0px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  #serviceName{
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-  }
+}
+.datetime {
+    font-family: monospace;
+}
+.estimatedTime {
+    margin-top: 4rem;
+}
