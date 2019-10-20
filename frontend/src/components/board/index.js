@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import { Textfit } from 'react-textfit';
 
 import styles from './styles.module.css';
+import socketIOClient from "socket.io-client";
 
 class Board extends Component {
     state = {
+        socket: null,
         current: {}
     };
 
     getCurrentSituation() {
-        this.props.socket.send({
+        this.state.socket.send({
             command: 'getCurrentSituation'
         });
     }
@@ -41,7 +43,7 @@ class Board extends Component {
     }
 
     login() {
-        this.props.socket.emit('join', {
+        this.state.socket.emit('join', {
             role: 'board'
         });
     }
@@ -49,13 +51,16 @@ class Board extends Component {
     setup() {
         this.login();
 
-        this.props.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
-        this.props.socket.on('currentSituation', this.updateCurrentSituation.bind(this));
-        this.props.socket.on('serving', this.serving.bind(this));
+        this.state.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
+        this.state.socket.on('currentSituation', this.updateCurrentSituation.bind(this));
+        this.state.socket.on('serving', this.serving.bind(this));
     }
 
     componentDidMount() {
-        this.setup();
+        const endpoint = 'ws://localhost:8080';
+        this.setState({
+           socket: socketIOClient(endpoint)
+        }, () => this.setup());
     }
     
     render() {

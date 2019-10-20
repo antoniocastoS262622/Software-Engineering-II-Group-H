@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import Loader from 'react-loader-spinner';
 
 import styles from './styles.module.css';
+import socketIOClient from "socket.io-client";
 
 class Counter extends Component {
     state = {
+        socket: null,
         id: null,
         services: null,
         ticket: null,
@@ -14,13 +16,13 @@ class Counter extends Component {
     };
 
     getCounterInfo() {
-        this.props.socket.send({
+        this.state.socket.send({
             command: 'getCounterInfo'
         });
     }
 
     serveNext() {
-        this.props.socket.send({
+        this.state.socket.send({
             command: 'serveNext'
         });
     }
@@ -42,7 +44,7 @@ class Counter extends Component {
 
     login(id, password) {
         this.setState({ loggingIn: true });
-        this.props.socket.emit('join', {
+        this.state.socket.emit('join', {
             role: 'counter',
             id,
             password
@@ -50,13 +52,16 @@ class Counter extends Component {
     }
 
     setup() {
-        this.props.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
-        this.props.socket.on('counterInfo', this.counterInfo.bind(this));
-        this.props.socket.on('nextClient', this.nextClient.bind(this));
+        this.state.socket.on('loginSuccessful', this.loginSuccessful.bind(this));
+        this.state.socket.on('counterInfo', this.counterInfo.bind(this));
+        this.state.socket.on('nextClient', this.nextClient.bind(this));
     }
 
     componentDidMount() {
-        this.setup();
+        const endpoint = 'ws://localhost:8080';
+        this.setState({
+            socket: socketIOClient(endpoint)
+        }, () => this.setup());
     }
 
     render() {

@@ -2,18 +2,20 @@ import React, {Component} from 'react';
 import Loader from 'react-loader-spinner';
 
 import styles from './styles.module.css';
+import socketIOClient from "socket.io-client";
 
 class Ticket extends Component {
     state = {
+        socket: null,
         ticket: null,
         service: null,
         requesting: false,
-        
+
         myTurnAtCounter: null
     };
 
     requestTicket(type) {
-        this.props.socket.send({
+        this.state.socket.send({
             command: 'getTicket',
             info: {
                 requestType: type
@@ -41,7 +43,7 @@ class Ticket extends Component {
     }
 
     login() {
-        this.props.socket.emit('join', {
+        this.state.socket.emit('join', {
             role: 'customer'
         });
     }
@@ -49,13 +51,16 @@ class Ticket extends Component {
     setup() {
         this.login();
 
-        this.props.socket.on('ticketGenerated', this.ticketGenerated.bind(this));
-        this.props.socket.on('serving', this.serving.bind(this));
-        this.props.socket.on('estimatedTimeChanged', this.estimatedTimeChanged.bind(this));
+        this.state.socket.on('ticketGenerated', this.ticketGenerated.bind(this));
+        this.state.socket.on('serving', this.serving.bind(this));
+        this.state.socket.on('estimatedTimeChanged', this.estimatedTimeChanged.bind(this));
     }
 
     componentDidMount() {
-        this.setup();
+        const endpoint = 'ws://localhost:8080';
+        this.setState({
+            socket: socketIOClient(endpoint)
+        }, () => this.setup());
     }
 
     render() {
