@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './admin.module.css';
 import socketIOClient from "socket.io-client";
 import Loader from "react-loader-spinner";
+import Counter from "./counter";
+import {FaPlus} from 'react-icons/fa';
 
 class Admin extends React.Component {
     constructor(props) {
@@ -73,15 +75,23 @@ class Admin extends React.Component {
                     </div>
                 )}
                 {this.state.loggingIn === true && this.state.loggedIn === false &&(
-                    <div className={styles.loadingContainer}>
+                    <div className={styles.adminContainer}>
                         <div className={styles.spinner}>
                             <Loader type="TailSpin" color="#444" height={50} width={50}/>
                         </div>
                     </div>
                 )}
                 {this.state.loggedIn === true && (
-                    <div className={styles.container}>
-                        <p>Placeholder for admin panel</p>
+                    <div className={styles.adminContainer}>
+                        <h1>Administration</h1>
+                        <div className={styles.countersContainer}>
+                            <h2>Counters</h2>
+                            <Counter id='1' /*supportedRequests={}*/ />
+                            <Counter id='2' /*supportedRequests={}*/ />
+                            <Counter id='3' /*supportedRequests={}*/ />
+                            <Counter id='4' /*supportedRequests={}*/ />
+                            <span className={styles.addButton}><FaPlus/></span>
+                        </div>
                     </div>
                 )}
             </div>

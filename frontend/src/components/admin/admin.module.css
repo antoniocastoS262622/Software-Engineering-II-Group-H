@@ -4,18 +4,26 @@ html, body {
     font-family: 'Segoe UI';
 }
 
-.container, .loginContainer, .loadingContainer, .counterContainer {
+h2 {
+    margin: 0.2rem 0;
+    text-align: center;
+}
+
+.container, .loginContainer, .loadingContainer, .adminContainer {
     display: flex;
     flex: 1;
 }
+
 .container {
     height: 100vh;
 }
+
 .loginContainer {
     flex-direction: column;
     margin: 15rem;
     align-items: center;
 }
+
 .passwordInput {
     width: 16em;
     height: 2vh;
@@ -25,10 +33,71 @@ html, body {
     border: 1px solid #ccc;
     border-radius: 0.5em;
 }
+
 .loadingContainer {
     justify-content: center;
     align-items: center;
 }
+
+.adminContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .spinner {
     height: 50px;
+}
+
+.countersContainer {
+    background-color: #d0d0d0;
+    border-radius: 1rem;
+    align-self: stretch;
+    margin: 0 10rem;
+    padding: 1rem;
+}
+
+.counterContainer {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.counterContainer p {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.tag {
+    margin: 0 0.5rem;
+    padding: 0.6rem;
+    color: #fff;
+    background-color: #444;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 0.5em;
+}
+
+.tagDisabled {
+    margin: 0 0.5rem;
+    padding: 0.6rem;
+    color: #444;
+    background-color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 0.5em;
+}
+
+.deleteButton {
+    padding-right: 0.5rem;
+}
+
+.addButton {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4em;
+    color: white;
+    background-color: #00cc00;
+    align-self: center;
+    display: inline-block;
 }
