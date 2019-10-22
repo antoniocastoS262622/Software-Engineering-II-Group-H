@@ -1,0 +1,49 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI';
+}
+.container, .boardContainer, .headerContainer {
+    display: flex;
+    flex: 1;
+}
+.container {
+    height: 100vh;
+}
+.boardContainer {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 4rem 18rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #e4e4e4;
+}
+.headerContainer {
+    color: #777;
+    letter-spacing: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-style: italic;
+}
+.headerContainer p, .lineContainer p {
+    display: flex;
+    justify-content: center;
+}
+.headerContainer p:nth-child(1) {
+    flex: 7;
+}
+.headerContainer p:nth-child(2) {
+    flex: 5;
+}
+.lineContainer {
+    display: flex;
+    flex: 4;
+    margin: 1rem 0;
+    padding: 1rem 0;
+    background-color: #d0d0d0;
+    border-radius: 1rem;
+    font-family: monospace;
+}
+.lineContainer p {
+    margin: 0;
+}

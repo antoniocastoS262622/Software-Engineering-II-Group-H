@@ -1,0 +1,71 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI';
+}
+button {
+    margin: 2rem;
+    padding: 1.15rem 2.5rem;
+    background-color: #fff;
+    font-size: 1.3em;
+    font-family: 'Segoe UI';
+    font-weight: 500;
+    text-transform: uppercase;
+    border: 3px solid transparent;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+button:hover {
+    border: 3px solid #444;
+}
+.container, .loginContainer, .loadingContainer, .counterContainer {
+    display: flex;
+    flex: 1;
+}
+.container {
+    height: 100vh;
+}
+.loginContainer {
+    flex-direction: column;
+    margin: 15rem;
+    align-items: center;
+}
+.passwordInput {
+    width: 16em;
+    height: 2vh;
+    margin-top: 3rem;
+    padding: 1rem;
+    font-size: 1.7em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+}
+.loadingContainer {
+    justify-content: center;
+    align-items: center;
+}
+.spinner {
+    height: 50px;
+}
+.counterContainer {
+    flex-direction: column;
+    margin: 10rem;
+    align-items: center;
+}
+.tag {
+    margin: 0 0.5rem;
+    padding: 0.6rem;
+    color: #fff;
+    background-color: #444;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 0.5em;
+}
+.servedTicket {
+    margin-bottom: 0.1em;
+    font-size: 8em;
+    font-weight: normal;
+    font-family: monospace;
+}
+.serveNextButton {
+    margin-top: 4em;
+}

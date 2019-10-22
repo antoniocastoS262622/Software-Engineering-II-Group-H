@@ -1,0 +1,21 @@
+{
+  "name": "oqm-backend",
+  "version": "1.0.0",
+  "description": "Backend for Office Queue Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -c -m 15000"
+  },
+  "author": "Group H",
+  "license": "ISC",
+  "dependencies": {
+    "async-redis": "1.1.x",
+    "redis": "2.8.x",
+    "socket.io": "2.3.x",
+    "@hapi/code": "7.0.x"
+  },
+  "devDependencies": {
+    "@hapi/lab": "21.x.x",
+    "sinon": "7.5.x"
+  }
+}
