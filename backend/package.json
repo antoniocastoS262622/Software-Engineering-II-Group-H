@@ -11,7 +11,7 @@
   "dependencies": {
     "async-redis": "1.1.x",
     "redis": "2.8.x",
-    "socket.io": "2.3.x",
+    "socket.io": "2.5.x",
     "@hapi/code": "7.0.x"
   },
   "devDependencies": {
